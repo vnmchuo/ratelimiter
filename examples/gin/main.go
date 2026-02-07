@@ -7,17 +7,17 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
-	"github.com/virgiliusnanamanek02/rate-limiter-go"
+	ratelimit "github.com/virgiliusnanamanek02/rate-limiter-go"
 	ratelimitgin "github.com/virgiliusnanamanek02/rate-limiter-go/middleware/gin"
 )
 
 func main() {
-	// 1. Inisialisasi Redis Client
+	// 1. Initialize Redis Client
 	rdb := redis.NewClient(&redis.Options{
 		Addr: "localhost:6379",
 	})
 
-	// 2. Inisialisasi Rate Limiter (e.g., 5 request per 10 detik)
+	// 2. Initialize Rate Limiter (e.g., 5 requests per 10 seconds)
 	limiter := ratelimit.NewRedisStore(
 		rdb,
 		ratelimit.WithLimit(5),
@@ -27,12 +27,12 @@ func main() {
 	// 3. Setup Gin Engine
 	r := gin.Default()
 
-	// 4. Tentukan bagaimana cara kita mengidentifikasi user (misal lewat IP)
+	// 4. Define how to identify the user (e.g., via IP address)
 	keyFunc := func(c *gin.Context) string {
 		return c.ClientIP()
 	}
 
-	// 5. Pasang Middleware ke Route tertentu atau Global
+	// 5. Apply Middleware to specific routes or globally
 	r.Use(ratelimitgin.RateLimiter(limiter, keyFunc))
 
 	// 6. Define Endpoint

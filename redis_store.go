@@ -7,7 +7,6 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// Kita simpan script Lua di variabel string atau file eksternal
 const slidingWindowScript = `
 local key = KEYS[1]
 local now = tonumber(ARGV[1])
@@ -15,15 +14,15 @@ local window = tonumber(ARGV[2])
 local limit = tonumber(ARGV[3])
 local clear_before = now - window
 
--- 1. Hapus data lama di luar window waktu sekarang
+-- 1. Remove expired data outside the current time window
 redis.call('ZREMRANGEBYSCORE', key, 0, clear_before)
 
--- 2. Hitung jumlah request yang ada di dalam window
+-- 2. Count the number of requests currently in the window
 local current_count = redis.call('ZCARD', key)
 
--- 3. Cek apakah masih di bawah limit
+-- 3. Check if the count is still below the limit
 if current_count < limit then
-    -- Tambahkan request sekarang ke Sorted Set
+    -- Add the current request to the Sorted Set
     redis.call('ZADD', key, now, now)
     redis.call('PEXPIRE', key, window)
     return {1, limit - current_count - 1}
@@ -75,4 +74,3 @@ func (s *RedisStore) Allow(ctx context.Context, key string) (*Result, error) {
 		ResetAfter: s.config.Window,
 	}, nil
 }
-

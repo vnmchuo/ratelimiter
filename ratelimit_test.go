@@ -57,7 +57,7 @@ func BenchmarkRedisStore_Allow(b *testing.B) {
 	store := NewRedisStore(client)
 	ctx := context.Background()
 
-	b.ResetTimer() // Mulai hitung waktu dari sini
+	b.ResetTimer() // Start counting time from here
 	for i := 0; i < b.N; i++ {
 		_, _ = store.Allow(ctx, "bench-key")
 	}

@@ -20,4 +20,3 @@ func WithWindow(window time.Duration) Option {
 		c.Window = window
 	}
 }
-
