@@ -31,19 +31,21 @@ else
 end
 `
 
+// RedisStore implements the Limiter interface using Redis as the backend.
+// It utilizes Lua scripting to ensure atomic increments and window management.
 type RedisStore struct {
 	client *redis.Client
 	config Config
 }
 
+// NewRedisStore initializes a new RedisStore with the provided Redis client and options.
+// If no options are provided, it defaults to a limit of 100 requests per minute.
 func NewRedisStore(client *redis.Client, opts ...Option) *RedisStore {
-	// Default config
 	cfg := Config{
 		Limit:  100,
 		Window: time.Minute,
 	}
 
-	// Apply functional options
 	for _, opt := range opts {
 		opt(&cfg)
 	}
@@ -54,6 +56,8 @@ func NewRedisStore(client *redis.Client, opts ...Option) *RedisStore {
 	}
 }
 
+// Allow executes the sliding window rate limiting logic using a Redis Lua script.
+// This operation is atomic and thread-safe for distributed environments.
 func (s *RedisStore) Allow(ctx context.Context, key string) (*Result, error) {
 	now := time.Now().UnixMilli()
 	windowMS := s.config.Window.Milliseconds()

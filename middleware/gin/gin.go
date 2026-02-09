@@ -1,21 +1,20 @@
-package gin
+package middleware
 
 import (
 	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	ginS "github.com/gin-gonic/gin"
-	ratelimit "github.com/virgiliusnanamanek02/rate-limiter-go"
+	ratelimit "github.com/virgiliusnanamanek02/ratelimiter"
 )
 
-func RateLimiter(limiter ratelimit.Limiter, keyFunc func(*ginS.Context) string) ginS.HandlerFunc {
-	return func(ctx *ginS.Context) {
+func RateLimiter(limiter ratelimit.Limiter, keyFunc func(*gin.Context) string) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
 		key := keyFunc(ctx)
 		res, err := limiter.Allow(ctx.Request.Context(), key)
 
 		if err != nil {
-			ctx.AbortWithStatusJSON(http.StatusInternalServerError, ginS.H{"error": "rate limiter error"})
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "rate limiter error"})
 			return
 		}
 
