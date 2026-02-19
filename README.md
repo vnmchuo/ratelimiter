@@ -1,7 +1,7 @@
 # Distributed Rate Limiter for Go
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/virgiliusnanamanek02/ratelimiter.svg)](https://pkg.go.dev/github.com/virgiliusnanamanek02/ratelimiter)
-[![Go Report Card](https://goreportcard.com/badge/github.com/virgiliusnanamanek02/ratelimiter)](https://goreportcard.com/report/github.com/virgiliusnanamanek02/ratelimiter)
+[![Go Reference](https://pkg.go.dev/badge/github.com/vnmchuo/ratelimiter.svg)](https://pkg.go.dev/github.com/vnmchuo/ratelimiter)
+[![Go Report Card](https://goreportcard.com/badge/github.com/vnmchuo/ratelimiter)](https://goreportcard.com/report/github.com/vnmchuo/ratelimiter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A high-performance, distributed rate-limiting library for Go, powered by Redis and Lua scripting. This library implements the **Sliding Window Counter** algorithm to ensure precision and atomicity across multiple service instances.
@@ -22,7 +22,7 @@ This library uses the Sliding Window Counter algorithm implemented with Redis so
 ## 🛠 Installation
 
 ```bash
-go get github.com/virgiliusnanamanek02/ratelimiter@v1.0.7
+go get github.com/vnmchuo/ratelimiter@v1.0.7
 ```
 
 > 💡 **Note**: Make sure the version tag `v1.0.7` exists in the repository. Otherwise, use `@latest`.
@@ -37,7 +37,7 @@ import (
     "time"
 
     "github.com/redis/go-redis/v9"
-    "github.com/virgiliusnanamanek02/ratelimiter"
+    "github.com/vnmchuo/ratelimiter"
 )
 
 func main() {
@@ -73,7 +73,7 @@ This library is designed to be easily wrapped into any middleware.
 
 ```go
 import (
-    ginmw "github.com/virgiliusnanamanek02/ratelimiter/middleware/gin"
+    ginmw "github.com/vnmchuo/ratelimiter/middleware/gin"
 )
 
 // ...
