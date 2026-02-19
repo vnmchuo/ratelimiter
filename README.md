@@ -19,7 +19,7 @@ A high-performance, distributed rate-limiting library for Go, powered by Redis a
 ## 🛠 Installation
 
 ```bash
-go get github.com/vnmchuo/ratelimiter@latest
+go get github.com/vnmchuo/ratelimiter@v1.1.0
 ```
 
 ## 💡 Quick Start
