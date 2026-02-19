@@ -1,4 +1,4 @@
-module github.com/virgiliusnanamanek02/ratelimiter
+module github.com/vnmchuo/ratelimiter
 
 go 1.25.6
 

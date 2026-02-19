@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	ratelimit "github.com/virgiliusnanamanek02/ratelimiter"
+	ratelimit "github.com/vnmchuo/ratelimiter"
 )
 
 func RateLimiter(limiter ratelimit.Limiter, keyFunc func(*gin.Context) string) gin.HandlerFunc {

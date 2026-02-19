@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
-	ratelimit "github.com/virgiliusnanamanek02/ratelimiter"
-	ratelimitgin "github.com/virgiliusnanamanek02/ratelimiter/middleware/gin"
+	ratelimit "github.com/vnmchuo/ratelimiter"
+	ratelimitgin "github.com/vnmchuo/ratelimiter/middleware/gin"
 )
 
 func main() {
