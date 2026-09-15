@@ -19,7 +19,7 @@ A high-performance, distributed rate-limiting library for Go, powered by Redis a
 ## 🛠 Installation
 
 ```bash
-go get github.com/vnmchuo/ratelimiter@v1.1.0
+go get github.com/vnmchuo/ratelimiter@v1.2.0
 ```
 
 ## 💡 Quick Start
@@ -117,6 +117,24 @@ r.Use(ginmw.RateLimiter(limiter, func(c *gin.Context) string {
 ```
 
 The middleware automatically sets `X-RateLimit-Limit` and `X-RateLimit-Remaining` response headers and returns HTTP 429 when the limit is exceeded.
+
+### gRPC Interceptor
+
+```go
+import (
+    grpcmw "github.com/vnmchuo/ratelimiter/middleware/grpc"
+)
+
+// Standard UnaryServerInterceptor with tenant metadata extraction
+s := grpc.NewServer(
+    grpc.UnaryInterceptor(grpcmw.RateLimiter(
+        limiter,
+        grpcmw.KeyFromMetadata("x-tenant-id", "default-tenant"),
+    )),
+)
+```
+
+The interceptor automatically returns `codes.ResourceExhausted` when the limit is exceeded and attaches `x-ratelimit-limit`, `x-ratelimit-remaining`, and `x-ratelimit-reset` trailing metadata.
 
 ## 📊 Benchmarks
 

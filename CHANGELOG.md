@@ -8,7 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-## [1.1.0] - 2026-02-19
+## [1.2.0] - 2026-09-15
+
+### Added
+
+- `middleware/grpc`: First-class gRPC `UnaryServerInterceptor` (`RateLimiter` and `RateLimiterN`) for rate limiting incoming RPC calls.
+- Key extraction functions: `KeyFromMetadata(headerKey, fallback)`, `KeyFromMethod()`, and `KeyFromPeerIP()`.
+- Automatic injection of `x-ratelimit-limit`, `x-ratelimit-remaining`, and `x-ratelimit-reset` into gRPC trailing metadata.
+- Returns standard `codes.ResourceExhausted` with informative details when rate limit is reached.
+- Unit tests in `middleware/grpc/grpc_test.go` using miniredis.
 
 ### Added
 
